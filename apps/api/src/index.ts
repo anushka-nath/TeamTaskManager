@@ -7,6 +7,7 @@ import cookieParser from "cookie-parser";
 import { env } from "./config/env.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import { successResponse } from "./utils/apiResponse.js";
+import authRouter from "./routes/auth.routes.js";
 
 const app = express();
 
@@ -31,6 +32,8 @@ app.use(cookieParser());
 app.get("/api/v1/health", (_req, res) => {
   res.json(successResponse({ status: "ok" }));
 });
+
+app.use("/api/v1/auth", authRouter);
 
 app.use((_req, res) => {
   res.status(404).json({
