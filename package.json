@@ -9,9 +9,15 @@
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",
+    "start": "cd apps/api && npm start",
+    "db:migrate": "cd apps/api && npx prisma migrate deploy",
     "lint": "turbo run lint",
     "test": "turbo run test"
   },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "packageManager": "npm@10.9.7",
   "devDependencies": {
     "turbo": "^2.3.0"
   }

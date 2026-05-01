@@ -1,0 +1,10 @@
+{
+  "name": "ttm-web-static",
+  "version": "1.0.0",
+  "dependencies": {
+    "serve": "^14.2.6"
+  },
+  "scripts": {
+    "start": "serve -s dist -l ${PORT:-3000}"
+  }
+}
