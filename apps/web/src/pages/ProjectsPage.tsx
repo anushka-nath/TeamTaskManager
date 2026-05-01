@@ -62,7 +62,7 @@ export function ProjectsPage() {
       {!isLoading && (!filteredProjects || filteredProjects.length === 0) && (
         <EmptyState
           title="No projects yet"
-          description="Create your first project to get started."
+          description="Create your first project to start adding tasks and managing your team. You'll automatically become the project admin."
           icon={FolderOpen}
         />
       )}

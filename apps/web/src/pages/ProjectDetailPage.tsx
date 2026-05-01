@@ -7,7 +7,6 @@ import { MemberList } from "@/components/project/MemberList";
 import { ProjectForm } from "@/components/project/ProjectForm";
 import { TaskBoard } from "@/components/task/TaskBoard";
 import { TaskCardSkeleton } from "@/components/ui/Skeleton";
-import { EmptyState } from "@/components/ui/EmptyState";
 import { cn } from "@/lib/utils";
 
 type Tab = "tasks" | "members" | "settings";
@@ -107,19 +106,11 @@ export function ProjectDetailPage() {
       </div>
 
       {activeTab === "tasks" && (
-        project.tasks?.length === 0 ? (
-          <EmptyState
-            title="No tasks yet"
-            description="Create your first task to track progress."
-            icon={CheckSquare}
-          />
-        ) : (
-          <TaskBoard
-            projectId={project.id}
-            isAdmin={!!isAdmin}
-            projectMembers={project.members || []}
-          />
-        )
+        <TaskBoard
+          projectId={project.id}
+          isAdmin={!!isAdmin}
+          projectMembers={project.members || []}
+        />
       )}
 
       {activeTab === "members" && (

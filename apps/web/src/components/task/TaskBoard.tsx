@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Plus } from "lucide-react";
+import { Plus, CheckSquare } from "lucide-react";
 import { StatusColumn } from "./StatusColumn";
 import { TaskForm } from "./TaskForm";
 import { useTasks, useUpdateTask } from "@/hooks/useTasks";
 import { Spinner } from "@/components/ui/Spinner";
+import { EmptyState } from "@/components/ui/EmptyState";
 
 interface TaskBoardProps {
   projectId: string;
@@ -48,16 +49,28 @@ export function TaskBoard({ projectId, isAdmin, projectMembers }: TaskBoardProps
           </button>
         </div>
       )}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {tasksByStatus.map(({ status, items }) => (
-          <StatusColumn
-            key={status}
-            status={status}
-            tasks={items}
-            onStatusChange={handleStatusChange}
-          />
-        ))}
-      </div>
+      {(!tasks || tasks.length === 0) ? (
+        <EmptyState
+          title="No tasks yet"
+          description={
+            isAdmin
+              ? "Click 'New Task' above to create your first task."
+              : "Only project admins can create tasks. Ask an admin to add tasks to this project."
+          }
+          icon={CheckSquare}
+        />
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {tasksByStatus.map(({ status, items }) => (
+            <StatusColumn
+              key={status}
+              status={status}
+              tasks={items}
+              onStatusChange={handleStatusChange}
+            />
+          ))}
+        </div>
+      )}
       {showForm && (
         <TaskForm
           mode="create"
