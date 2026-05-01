@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import { useToast } from "@/context/ToastContext";
 
 export function RegisterPage() {
   const [name, setName] = useState("");
@@ -8,6 +9,7 @@ export function RegisterPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const { register } = useAuth();
+  const { addToast } = useToast();
   const navigate = useNavigate();
 
   async function handleSubmit(e: React.FormEvent) {
@@ -19,6 +21,7 @@ export function RegisterPage() {
     } catch (err: any) {
       const msg = err.response?.data?.error?.message || "Registration failed";
       setError(msg);
+      addToast(msg, "error");
     }
   }
 

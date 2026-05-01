@@ -4,6 +4,8 @@ import { StatCard } from "@/components/dashboard/StatCard";
 import { StatusChart } from "@/components/dashboard/StatusChart";
 import { OverdueList } from "@/components/dashboard/OverdueList";
 import { RecentActivity } from "@/components/dashboard/RecentActivity";
+import { StatCardSkeleton } from "@/components/ui/Skeleton";
+import { EmptyState } from "@/components/ui/EmptyState";
 import { Spinner } from "@/components/ui/Spinner";
 
 export function DashboardPage() {
@@ -15,8 +17,28 @@ export function DashboardPage() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center py-16">
-        <Spinner size="lg" />
+      <div>
+        <h1 className="text-2xl font-bold text-gray-900 mb-6">Dashboard</h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          <StatCardSkeleton />
+          <StatCardSkeleton />
+          <StatCardSkeleton />
+          <StatCardSkeleton />
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 mb-6">
+          <div className="lg:col-span-3">
+            <h2 className="text-sm font-semibold text-gray-900 mb-3">Task Status Distribution</h2>
+            <div className="bg-white rounded-lg border border-gray-200 p-6 h-64 flex items-center justify-center">
+              <Spinner size="md" />
+            </div>
+          </div>
+          <div className="lg:col-span-2">
+            <h2 className="text-sm font-semibold text-gray-900 mb-3">Overdue Tasks</h2>
+            <div className="bg-white rounded-lg border border-gray-200 p-6 h-64 flex items-center justify-center">
+              <Spinner size="md" />
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -65,7 +87,11 @@ export function DashboardPage() {
 
       <div>
         <h2 className="text-sm font-semibold text-gray-900 mb-3">Recent Activity</h2>
-        <RecentActivity tasks={recent || []} />
+        {recent && recent.length > 0 ? (
+          <RecentActivity tasks={recent} />
+        ) : (
+          <EmptyState title="No recent activity" description="Tasks you update will appear here." icon={CheckSquare} />
+        )}
       </div>
     </div>
   );

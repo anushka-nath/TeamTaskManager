@@ -3,7 +3,8 @@ import { Plus, FolderOpen } from "lucide-react";
 import { useProjects, useCreateProject, useUpdateProject } from "@/hooks/useProjects";
 import { ProjectCard } from "@/components/project/ProjectCard";
 import { ProjectForm } from "@/components/project/ProjectForm";
-import { Spinner } from "@/components/ui/Spinner";
+import { ProjectCardSkeleton } from "@/components/ui/Skeleton";
+import { EmptyState } from "@/components/ui/EmptyState";
 import type { CreateProjectInput } from "@ttm/shared";
 
 export function ProjectsPage() {
@@ -51,16 +52,19 @@ export function ProjectsPage() {
       </div>
 
       {isLoading && (
-        <div className="flex items-center justify-center py-12">
-          <Spinner size="lg" />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <ProjectCardSkeleton />
+          <ProjectCardSkeleton />
+          <ProjectCardSkeleton />
         </div>
       )}
 
       {!isLoading && (!filteredProjects || filteredProjects.length === 0) && (
-        <div className="flex flex-col items-center justify-center py-16 text-gray-400">
-          <FolderOpen className="w-12 h-12 mb-3" />
-          <p className="text-sm">No projects yet</p>
-        </div>
+        <EmptyState
+          title="No projects yet"
+          description="Create your first project to get started."
+          icon={FolderOpen}
+        />
       )}
 
       {!isLoading && filteredProjects && filteredProjects.length > 0 && (

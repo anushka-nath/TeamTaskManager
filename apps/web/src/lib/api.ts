@@ -73,6 +73,11 @@ api.interceptors.response.use(
     if (error.response?.status === 403) {
       showToast("Access denied", "error");
       window.location.href = "/dashboard";
+      return Promise.reject(error);
+    }
+
+    if (!error.response) {
+      showToast("Network error. Please check your connection.", "error");
     }
 
     return Promise.reject(error);

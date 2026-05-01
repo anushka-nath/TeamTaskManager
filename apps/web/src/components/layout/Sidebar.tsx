@@ -8,7 +8,11 @@ const navItems = [
   { to: "/profile", label: "Profile", icon: User },
 ];
 
-export function Sidebar() {
+interface SidebarProps {
+  onNavigate?: () => void;
+}
+
+export function Sidebar({ onNavigate }: SidebarProps) {
   return (
     <aside className="w-64 h-screen bg-white border-r border-gray-200 flex flex-col">
       <div className="px-6 py-4 border-b border-gray-200">
@@ -19,6 +23,7 @@ export function Sidebar() {
           <NavLink
             key={item.to}
             to={item.to}
+            onClick={onNavigate}
             className={({ isActive }) =>
               cn(
                 "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors",

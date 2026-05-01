@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import { useToast } from "@/context/ToastContext";
 
 export function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const { login } = useAuth();
+  const { addToast } = useToast();
   const navigate = useNavigate();
 
   async function handleSubmit(e: React.FormEvent) {
@@ -18,6 +20,7 @@ export function LoginPage() {
     } catch (err: any) {
       const msg = err.response?.data?.error?.message || "Login failed";
       setError(msg);
+      addToast(msg, "error");
     }
   }
 

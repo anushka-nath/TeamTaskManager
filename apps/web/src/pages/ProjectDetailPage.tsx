@@ -6,7 +6,8 @@ import { useAuth } from "@/hooks/useAuth";
 import { MemberList } from "@/components/project/MemberList";
 import { ProjectForm } from "@/components/project/ProjectForm";
 import { TaskBoard } from "@/components/task/TaskBoard";
-import { Spinner } from "@/components/ui/Spinner";
+import { TaskCardSkeleton } from "@/components/ui/Skeleton";
+import { EmptyState } from "@/components/ui/EmptyState";
 import { cn } from "@/lib/utils";
 
 type Tab = "tasks" | "members" | "settings";
@@ -25,8 +26,17 @@ export function ProjectDetailPage() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center py-16">
-        <Spinner size="lg" />
+      <div className="space-y-6">
+        <div className="animate-pulse space-y-2">
+          <div className="h-4 w-24 bg-gray-200 rounded" />
+          <div className="h-8 w-64 bg-gray-200 rounded" />
+        </div>
+        <div className="h-10 w-full bg-gray-200 rounded" />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <TaskCardSkeleton />
+          <TaskCardSkeleton />
+          <TaskCardSkeleton />
+        </div>
       </div>
     );
   }
@@ -97,11 +107,19 @@ export function ProjectDetailPage() {
       </div>
 
       {activeTab === "tasks" && (
-        <TaskBoard
-          projectId={project.id}
-          isAdmin={!!isAdmin}
-          projectMembers={project.members || []}
-        />
+        project.tasks?.length === 0 ? (
+          <EmptyState
+            title="No tasks yet"
+            description="Create your first task to track progress."
+            icon={CheckSquare}
+          />
+        ) : (
+          <TaskBoard
+            projectId={project.id}
+            isAdmin={!!isAdmin}
+            projectMembers={project.members || []}
+          />
+        )
       )}
 
       {activeTab === "members" && (
