@@ -9,6 +9,7 @@ import { RegisterPage } from "@/pages/RegisterPage";
 import { ProfilePage } from "@/pages/ProfilePage";
 import { DashboardPage } from "@/pages/DashboardPage";
 import { ProjectsPage } from "@/pages/ProjectsPage";
+import { ProjectDetailPage } from "@/pages/ProjectDetailPage";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +38,16 @@ function App() {
                 <ProtectedRoute>
                   <AppLayout>
                     <ProjectsPage />
+                  </AppLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/projects/:id"
+              element={
+                <ProtectedRoute>
+                  <AppLayout>
+                    <ProjectDetailPage />
                   </AppLayout>
                 </ProtectedRoute>
               }
