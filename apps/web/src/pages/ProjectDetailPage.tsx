@@ -5,6 +5,7 @@ import { useProject, useUpdateProject } from "@/hooks/useProjects";
 import { useAuth } from "@/hooks/useAuth";
 import { MemberList } from "@/components/project/MemberList";
 import { ProjectForm } from "@/components/project/ProjectForm";
+import { TaskBoard } from "@/components/task/TaskBoard";
 import { Spinner } from "@/components/ui/Spinner";
 import { cn } from "@/lib/utils";
 
@@ -96,9 +97,11 @@ export function ProjectDetailPage() {
       </div>
 
       {activeTab === "tasks" && (
-        <div>
-          <p className="text-gray-600">Tasks will be available in Phase 4.</p>
-        </div>
+        <TaskBoard
+          projectId={project.id}
+          isAdmin={!!isAdmin}
+          projectMembers={project.members || []}
+        />
       )}
 
       {activeTab === "members" && (

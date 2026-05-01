@@ -45,3 +45,47 @@ export function authorizeProjectRole(roles: MemberRole[]) {
     next();
   };
 }
+
+export async function authorizeTaskUpdate(req: Request, _res: Response, next: NextFunction) {
+  if (!req.user || !req.projectMember) {
+    next(errorResponse("UNAUTHORIZED", "Authentication required", 401));
+    return;
+  }
+
+  if (req.projectMember.role === MemberRole.ADMIN) {
+    next();
+    return;
+  }
+
+  const taskId = req.params.taskId;
+  if (!taskId) {
+    next(errorResponse("NOT_FOUND", "Task ID not found in request", 404));
+    return;
+  }
+
+  const task = await prisma.task.findUnique({
+    where: { id: taskId },
+    select: { assigneeId: true },
+  });
+
+  if (!task) {
+    next(errorResponse("NOT_FOUND", "Task not found", 404));
+    return;
+  }
+
+  if (task.assigneeId !== req.user.id) {
+    next(errorResponse("FORBIDDEN", "You can only update tasks assigned to you", 403));
+    return;
+  }
+
+  const allowedFields = ["status"];
+  const requestFields = Object.keys(req.body);
+  const hasDisallowed = requestFields.some((field) => !allowedFields.includes(field));
+
+  if (hasDisallowed) {
+    next(errorResponse("FORBIDDEN", "Members can only update task status", 403));
+    return;
+  }
+
+  next();
+}

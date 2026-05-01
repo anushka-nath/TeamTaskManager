@@ -10,6 +10,7 @@ import { ProfilePage } from "@/pages/ProfilePage";
 import { DashboardPage } from "@/pages/DashboardPage";
 import { ProjectsPage } from "@/pages/ProjectsPage";
 import { ProjectDetailPage } from "@/pages/ProjectDetailPage";
+import { TaskDetailPage } from "@/pages/TaskDetailPage";
 
 const queryClient = new QueryClient();
 
@@ -48,6 +49,16 @@ function App() {
                 <ProtectedRoute>
                   <AppLayout>
                     <ProjectDetailPage />
+                  </AppLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/projects/:projectId/tasks/:taskId"
+              element={
+                <ProtectedRoute>
+                  <AppLayout>
+                    <TaskDetailPage />
                   </AppLayout>
                 </ProtectedRoute>
               }
