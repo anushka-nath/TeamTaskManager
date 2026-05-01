@@ -10,6 +10,7 @@ import { successResponse } from "./utils/apiResponse.js";
 import authRouter from "./routes/auth.routes.js";
 import projectRouter from "./routes/project.routes.js";
 import taskRouter from "./routes/task.routes.js";
+import dashboardRouter from "./routes/dashboard.routes.js";
 
 const app = express();
 
@@ -38,6 +39,7 @@ app.get("/api/v1/health", (_req, res) => {
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/projects", projectRouter);
 app.use("/api/v1/projects/:projectId/tasks", taskRouter);
+app.use("/api/v1/dashboard", dashboardRouter);
 
 app.use((_req, res) => {
   res.status(404).json({
