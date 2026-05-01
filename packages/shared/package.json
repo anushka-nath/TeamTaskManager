@@ -1,0 +1,29 @@
+{
+  "name": "@ttm/shared",
+  "version": "1.0.0",
+  "private": true,
+  "main": "dist/schemas.js",
+  "types": "dist/schemas.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/schemas.js",
+      "require": "./dist/schemas.js",
+      "types": "./dist/schemas.d.ts"
+    },
+    "./schemas": {
+      "import": "./dist/schemas.js",
+      "require": "./dist/schemas.js",
+      "types": "./dist/schemas.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0"
+  }
+}
