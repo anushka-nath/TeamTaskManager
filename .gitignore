@@ -11,3 +11,4 @@ build
 coverage
 *.tsbuildinfo
 prisma/migrations/*/migration_lock.toml
+.turbo/cache

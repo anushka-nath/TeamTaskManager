@@ -29,15 +29,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const res = await api.get("/auth/me");
       setUser(res.data.data);
     } catch {
-      try {
-        const refreshRes = await api.post("/auth/refresh");
-        setAccessToken(refreshRes.data.data.accessToken);
-        const meRes = await api.get("/auth/me");
-        setUser(meRes.data.data);
-      } catch {
-        setUser(null);
-        setAccessToken(null);
-      }
+      setUser(null);
+      setAccessToken(null);
     } finally {
       setIsLoading(false);
     }

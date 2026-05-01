@@ -63,7 +63,6 @@ api.interceptors.response.use(
         return api(originalRequest);
       } catch {
         setAccessToken(null);
-        window.location.href = "/login";
         return Promise.reject(error);
       } finally {
         isRefreshing = false;
@@ -72,7 +71,6 @@ api.interceptors.response.use(
 
     if (error.response?.status === 403) {
       showToast("Access denied", "error");
-      window.location.href = "/dashboard";
       return Promise.reject(error);
     }
 
