@@ -4,6 +4,7 @@
     "buildCommand": "npm run build --workspace=@ttm/shared && npm run build --workspace=@ttm/api"
   },
   "deploy": {
-    "startCommand": "npx prisma migrate deploy && npm start"
+    "startCommand": "npx prisma migrate deploy --schema=apps/api/prisma/schema.prisma && npm start"
   }
 }
+
